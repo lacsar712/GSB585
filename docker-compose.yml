@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    container_name: city-courier-backend
+    ports:
+      - "8000:8000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-local-dev-jwt-secret-change-in-production-2026}
+    volumes:
+      - sqlite_data:/app/data
+
+  frontend:
+    build: ./frontend
+    container_name: city-courier-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  sqlite_data:
